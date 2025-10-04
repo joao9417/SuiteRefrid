@@ -9,7 +9,7 @@ def registro_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('login')
     else:
         form = RegistroForm()
     

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga Termica</title>
+
+    <style>
+        /* Estilos básicos para replicar el diseño de Excel */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 5px;
+
+        }
+        td, th {
+            padding: 5px;
+            border: 1px solid #c0c0c0;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .header {
+            font-weight: bold;
+            background-color: #e0e0e0;
+        }
+        .input-yellow {
+            background-color: #ffffcc;
+        }
+        .output-gray {
+            background-color: #e6e6e6;
+        }
+        .text-input, .select-input {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            background: transparent;
+            text-align: center;
+        }
+        .centered-text {
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Carga Termica {{nombreCuarto}}</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            <table class="table table-bordered">
+                <tr class="container">
+                    <td class="header">T amb</td>
+                    <td class="input-yellow"><input type="text" name="t_amb" value="25" class="text-input"></td>
+                    <td class="header">°C</td>
+                    <td class="header">T cám</td>
+                    <td class="input-yellow"><input type="text" name="t_cam" value="-5" class="text-input"></td>
+                    <td class="header">°C</td>
+                    <td class="header">F. Segur</td>
+                    <td class="input-yellow"><input type="text" name="f_segur" value="0%" class="text-input"></td>
+                </tr>
+                <tr class="container">
+                    <td class="header">L [m]</td>
+                    <td class="input-yellow"><input type="text" name="l_m" value="5,0" class="text-input"></td>
+                    <td class="header">pared</td>
+                    <td class="input-yellow"><input type="text" name="pared" value="100" class="text-input"></td>
+                    <td class="header" colspan="2">tiempo de control</td>
+                    <td class="input-yellow" colspan="2"><input type="text" name="tiempo_control" value="0,8" class="text-input"></td>
+                </tr>
+                <tr class="container">
+                    <td class="header">a [m]</td>
+                    <td class="input-yellow"><input type="text" name="a_m" value="3,0" class="text-input"></td>
+                    <td class="header">techo</td>
+                    <td class="input-yellow"><input type="text" name="techo" value="100" class="text-input"></td>
+                    <td class="header" colspan="2">tiempo compresor</td>
+                    <td class="input-yellow" colspan="2"><input type="text" name="tiempo_compresor" value="0,8" class="text-input"></td>
+                </tr>
+                <tr class="container">
+                    <td class="header">h [m]</td>
+                    <td class="input-yellow"><input type="text" name="h_m" value="3,0" class="text-input"></td>
+                    <td class="header">piso</td>
+                    <td class="input-yellow"><input type="text" name="piso" value="100" class="text-input"></td>
+                    <td class="header" colspan="2"></td>               
+                </tr>
+
+                <tr class="container">
+                    <td class="header">Aplicacion</td>
+                    <td class="input-yellow"><input type="text" name="aplicacion" value="tunel" class="text-input"></td>               
+                </tr>
+                
+                <tr class="container">
+                    <td class="header">producto1</td>
+                    <td class="input-yellow" colspan="2"><input type="text" name="producto1" value="salchicha de cerdo" class="text-input"></td>
+                    <td class="header" colspan="3">Canastas</td>
+                    <td class="input-yellow" colspan="2"><input type="text" name="canastas1" value="25" class="text-input"> cms</td>
+                </tr>
+                
+                <tr class="container">
+                    <td class="header">T in [°C]</td>
+                    <td class="input-yellow"><input type="text" name="p1_t_in" value="55" class="text-input"></td>
+                    <td class="header">T cong [°C]</td>
+                    <td class="input-yellow"><input type="text" name="p1_t_cong" value="FALTA" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">T out [°C]</td>
+                    <td class="input-yellow"><input type="text" name="p1_t_out" value="4" class="text-input"></td>
+                    <td class="header">c</td>
+                    <td class="input-yellow"><input type="text" name="c" value="0.6" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">rotacion</td>
+                    <td class="input-yellow"><input type="text" name="rotacion" value="1.050" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">f.carga</td>
+                    <td class="input-yellow"><input type="text" name="f.carga" value="1.1" class="text-input"></td>
+                    <td class="calor latente">calor latente</td>
+                    <td class="input-yellow"><input type="text" name="calor_latente" value="64.0" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">almac</td>
+                    <td class="input-yellow"><input type="text" name="almac" value="0.3" class="text-input"></td>
+                    <td class="header">calor evolucion</td>
+                    <td class="input-yellow"><input type="text" name="calor_evolucion" value="0.0" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">personas</td>
+                    <td class="input-yellow"><input type="text" name="personas" value="5" class="text-input"></td>
+                    <td class="header">luxes</td>
+                    <td class="input-yellow"><input type="text" name="luxes" value="250" class="text-input"></td>
+                    <td class="header">t [h]</td>
+                    <td class="input-yellow"><input type="text" name="t_h1" value="1" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">t [h]</td>
+                    <td class="input-yellow"><input type="text" name="t_h2" value="1" class="text-input"></td>
+                    <td class="header">luminaria</td>
+                    <td class="input-yellow"><input type="text" name="luminaria" value="300" class="text-input"></td>
+                    <td class="header">W</td>
+                    <td class="input-yellow"><input type="text" name="w" value="40" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">evap</td>
+                    <td class="input-yellow"><input type="text" name="evap" value="dmsp-500e-4" class="text-input"></td>
+                    <td class="header">cant</td>
+                    <td class="input-yellow"><input type="text" name="cant" value="" class="text-input"></td>
+                    <td class="header">cant</td>
+                    <td class="input-yellow"><input type="text" name="cant" value="" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">cant</td>
+                    <td class="input-yellow"><input type="text" name="cant" value="" class="text-input"></td>
+                    <td class="header">N° mot</td>
+                    <td class="input-yellow"><input type="text" name="n_mot" value="" class="text-input"></td>
+                    <td class="header">m3/h c/u</td>
+                    <td class="input-yellow"><input type="text" name="m3_h_c_u" value="13.940" class="text-input"></td>
+                    <td class="header">HP</td>
+                    <td class="input-yellow"><input type="text" name="hp" value="0.5" class="text-input"></td>
+                    <td class="header">watts</td>
+                    <td class="input-yellow"><input type="text" name="watts" value="373.0" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">largo mm</td>
+                    <td class="input-yellow"><input type="text" name="largo_mm" value="" class="text-input"></td>
+                    <td class="header">alto mm</td>
+                    <td class="input-yellow"><input type="text" name="alto_mm" value="" class="text-input"></td>
+                    <td class="header">prof mm</td>
+                    <td class="input-yellow"><input type="text" name="prof_mm" value="" class="text-input"></td>
+                </tr>
+                <tr>
+                    <td class="header">c/h</td>
+                    <td class="input-yellow"><input type="text" name="c_h" value="" class="text-input"></td>
+                    <td class="header">t [h]</td>
+                    <td class="input-yellow"><input type="text" name="t_h" value="" class="text-input"></td>
+                    <td class="header">t [h]</td>
+                    <td class="input-yellow"><input type="text" name="t_h" value="" class="text-input"></td>
+                </tr>
+                
+
+
+            </table>
+
+            <br>
+            <button type="submit">Enviar Informacion</button>
+        </form>
+    </div>
+</body>
+</html>
