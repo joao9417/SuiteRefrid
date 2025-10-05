@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('usuarios/', include('usuarios.urls')),
     path('dashboard/', include('dashboard_principal.urls')),
+    path('carga-termica/', include('m1_carga_termica.urls')),
 ]
