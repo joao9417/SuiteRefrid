@@ -82,6 +82,8 @@ WSGI_APPLICATION = 'SuiteRefridcol.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+DATABASE_ROUTERS = ['m1_carga_termica.routers.CargaTermicaRouter']
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -90,6 +92,15 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='5432'),
+    },
+
+    'm1_carga_termica': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME_CT'),
+        'USER': config('DB_USER_CT'),
+        'PASSWORD': config('DB_PASSWORD_CT'),
+        'HOST': config('DB_HOST_CT', default='localhost'),
+        'PORT': config('DB_PORT_CT', default='5432'),
     }
 }
 

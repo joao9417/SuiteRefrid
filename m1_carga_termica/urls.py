@@ -6,4 +6,5 @@ app_name = 'carga_termica'
 urlpatterns = [
     path('calculo/', views.calculo_carga_termica, name='calculo_carga_termica'),
     path('calculo/<str:nombre_cuarto>/', views.calculo_carga_termica, name='calculo_carga_termica_nombre'),
+    path('api/evaporador-data/', views.obtener_datos_evaporador, name='obtener_datos_evaporador'),
 ]
