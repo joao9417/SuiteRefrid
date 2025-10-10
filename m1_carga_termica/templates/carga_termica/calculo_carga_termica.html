@@ -27,12 +27,30 @@
                 </div>
                 <div class="col-md-6">
                     <label for="f_segur" class="form-label">Factor de seguridad [%]</label>
-                    <input type="text" name="f_segur" id="f_segur" class="form-control form-control-center" value="0">
+                    <div class="input-group">
+                        <input type="text" name="f_segur" id="f_segur" class="form-control form-control-center">
+                        <span class="input-group-text">%</span>
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <label for="aplicacion" class="form-label">Aplicación</label>
-                    <input type="text" name="aplicacion" id="aplicacion" class="form-control" value="Túnel">
+                    <select name="aplicacion" id="aplicacion" class="form-select form-control-center">
+                        <option value="Muelle">Muelle</option>
+                        <option value="Tunel">Tunel</option>
+                        <option value="Cuarto Frio">Cuarto Frio</option>
+                        <option value="Cong Parcial">Cong Parcial</option>
+                    </select>
                 </div>
+
+                <div class="col-md-6" id="porcentajeCongelacionContainer" style="display: none;">
+                    <label for="porcentaje_congelacion" class="form-label">% de congelacion</label>
+                    <div class="input-group">
+                        <input type="number" name="porcentaje_congelacion" id="porcentaje_congelacion" class="form-control form-control-center" placeholder="ej: 80" min="0" max="100" step="1">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+
+
                 <div class="col-md-6">
                     <label for="t_control" class="form-label">Tiempo Control</label>
                     <input type="text" name="t_control" id="t_control" class="form-control form-control-center" value="0.8">
@@ -48,11 +66,47 @@
             <legend class="fw-bold px-2">Dimensiones del cuarto</legend>
             <div class="row g-3">
                 <div class="col-md-6"><label for="l_m" class="form-label">L [m]</label><input type="text" name="l_m" class="form-control form-control-center" value="5.0"></div>
-                <div class="col-md-6"><label for="pared" class="form-label">Pared [mm]</label><input type="text" name="pared" class="form-control form-control-center" value="100"></div>
+                
+                <div class="col-md-6">
+                    <label for="pared" class="form-label">Pared [mm]</label>
+                    <select name="pared" id="pared" class="form-select form-control-center">
+                        <option value="0">0</option>
+                        <option value="50">50</option>
+                        <option value="80">80</option>
+                        <option value="100">100</option>
+                        <option value="125">125</option>
+                        <option value="150">150</option>
+                    </select>
+                </div>
+
                 <div class="col-md-6"><label for="a_m" class="form-label">a [m]</label><input type="text" name="a_m" class="form-control form-control-center" value="3.0"></div>
-                <div class="col-md-6"><label for="techo" class="form-label">Techo [mm]</label><input type="text" name="techo" class="form-control form-control-center" value="100"></div>
+                
+                <div class="col-md-6">
+                    <label for="techo" class="form-label">Techo [mm]</label>
+                    <select name="techo" id="techo" class="form-select form-control-center">
+                        <option value="0">0</option>
+                        <option value="50">50</option>
+                        <option value="80">80</option>
+                        <option value="100">100</option>
+                        <option value="125">125</option>
+                        <option value="150">150</option>
+                    </select>    
+                </div>
+
                 <div class="col-md-6"><label for="h_m" class="form-label">h [m]</label><input type="text" name="h_m" class="form-control form-control-center" value="3.0"></div>
-                <div class="col-md-6"><label for="piso" class="form-label">Piso [mm]</label><input type="text" name="piso" class="form-control form-control-center" value="100"></div>
+
+                <div class="col-md-6">
+                    <label for="piso" class="form-label">Piso [mm]</label>
+                    <select name="piso" id="piso" class="form-select form-control-center">
+                        <option value="0">0</option>
+                        <option value="50">50</option>
+                        <option value="80">80</option>
+                        <option value="100">100</option>
+                        <option value="125">125</option>
+                        <option value="150">150</option>
+                    </select>    
+                </div>
+
             </div>
         </fieldset>
 
@@ -65,6 +119,7 @@
                 <div class="col-md-4"><label for="p1_t_cong" class="form-label">T cong [°C]</label><input type="text" name="p1_t_cong" class="form-control form-control-center" value="FALTA"></div>
                 <div class="col-md-4"><label for="p1_t_out" class="form-label">T out [°C]</label><input type="text" name="p1_t_out" class="form-control form-control-center" value="4"></div>
                 <div class="col-md-4"><label for="rotacion" class="form-label">Rotación</label><input type="text" name="rotacion" class="form-control form-control-center" value="1.050"></div>
+                <div class="col-md-4"><label for="carros" class="form-label">Carros</label><input type="text" name="carros" class="form-control form-control-center" value="3"></div>
                 <div class="col-md-4"><label for="f_carga" class="form-label">Factor carga</label><input type="text" name="f_carga" class="form-control form-control-center" value="1.1"></div>
                 <div class="col-md-4"><label for="almac" class="form-label">Almacenamiento [ton]</label><input type="text" name="Almacenamiento" class="form-control form-control-center" value="0.3"></div>
                 <div class="col-md-4"><label for="calor_latente" class="form-label">Calor latente</label><input type="text" name="calor_latente" class="form-control form-control-center" value="64.0"></div>
@@ -104,6 +159,7 @@
                 <div class="col-md-4"><label for="p2_t_cong" class="form-label">T cong [°C]</label><input type="text" name="p2_t_cong" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="p2_t_out" class="form-label">T out [°C]</label><input type="text" name="p2_t_out" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="rotacion2" class="form-label">Rotación</label><input type="text" name="rotacion2" class="form-control form-control-center" value=""></div>
+                <div class="col-md-4"><label for="carros" class="form-label">Carros</label><input type="text" name="carros" class="form-control form-control-center" value="3"></div>
                 <div class="col-md-4"><label for="f_carga2" class="form-label">Factor carga</label><input type="text" name="f_carga2" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="almac2" class="form-label">Almacenamiento [ton]</label><input type="text" name="almac2" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="calor_latente2" class="form-label">Calor latente</label><input type="text" name="calor_latente2" class="form-control form-control-center" value=""></div>
@@ -129,7 +185,6 @@
             <div class="row g-3">
                 <div class="col-md-4"><label for="personas" class="form-label">Personas</label><input type="text" name="personas" class="form-control form-control-center" value="2"></div>
                 <div class="col-md-4"><label for="t_h_personas" class="form-label">Tiempo [h]</label><input type="text" name="t_h_personas" class="form-control form-control-center" value="0.5"></div>
-                <div class="col-md-4"><label for="carros" class="form-label">Carros</label><input type="text" name="carros" class="form-control form-control-center" value="3"></div>
             </div>
         </fieldset>
 
@@ -142,7 +197,7 @@
                 <div class="col-md-4"><label for="w" class="form-label">Potencia [W]</label><input type="text" name="w" class="form-control form-control-center" value="40"></div>
                 <div class="col-md-4"><label for="t_h_ilum" class="form-label">Tiempo [h]</label><input type="text" name="t_h_ilum" class="form-control form-control-center" value="0.5"></div>
             </div>
-        </fieldset>
+        </fieldset> 
 
         <fieldset class="border p-3 mb-4 rounded bg-gray">
             <legend class="fw-bold px-2">Evaporadores</legend>
@@ -198,6 +253,25 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // --- Lógica para mostrar/ocultar secciones basadas en checkboxes ---
+
+    // Aplicación - % de congelación
+    const aplicacionSelect = document.getElementById('aplicacion');
+    const porcentajeContainer = document.getElementById('porcentajeCongelacionContainer');
+
+    function togglePorcentajeCongelacion() {
+        // verificar si el valor seleccionado es "cong Parcial"
+        if (aplicacionSelect.value === 'Cong Parcial') {
+            //si es "Cong Parcial", muestra el contenedor
+            porcentajeContainer.style.display = 'block';
+        } else {
+            // si es cualquier otra opcion, lo oculta
+            porcentajeContainer.style.display = 'none';
+        }
+    }
+
+    togglePorcentajeCongelacion();
+    aplicacionSelect.addEventListener('change', togglePorcentajeCongelacion);
+    
     
     // Producto 2
     const toggleProducto2 = document.getElementById('toggleProducto2');

@@ -1,4 +1,5 @@
 /* Estilos personalizados para el contenedor y los colores de fondo */
+
 .container {
     max-width: 1000px;
     margin: auto;
@@ -7,21 +8,27 @@
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+
 .bg-yellow {
     background-color: #ffffcc;
 }
+
 .bg-blue {
     background-color: #e0f0ff;
 }
+
 .bg-green {
     background-color: #e0f7e0;
 }
+
 .bg-gray {
     background-color: #f5f5f5;
 }
+
 .bg-beige {
     background-color: #fff8e1;
 }
+
 .form-control-center {
     text-align: center;
 }
