@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Evaporador
+from .models import Productos
 
 #vista para renderizar la plantilla y manejar el formulario
 def calculo_carga_termica(request, nombre_cuarto=None):
@@ -11,7 +12,7 @@ def calculo_carga_termica(request, nombre_cuarto=None):
     if nombre_cuarto is None:
         nombre_cuarto = "Cuarto_Principal"
 
-    #obtener todos los modelos de evaporadores de la base de datos secundaria.
+    #1. OBTENER EVAPORADORES, para el dropdown
     try:
         evaporadores_lista = Evaporador.objects.using('m1_carga_termica').values('modelo').order_by('modelo')
     except Exception as e:
@@ -19,9 +20,18 @@ def calculo_carga_termica(request, nombre_cuarto=None):
         print(F"error al obtener evaporadores: {e}")
         evaporadores_lista = []
 
+    #2. OBTENER PRODUCTOS, para el dropdown
+    try:
+        productos_lista = Productos.objects.using('m1_carga_termica').values('producto').order_by('producto')
+    except Exception as e:
+        #manejar la excepcion si hay problemas de conexion con la BD
+        print(F"error al obtener productos: {e}")
+        productos_lista = []
+    
     context = {
         'nombreCuarto': nombre_cuarto,
         'evaporadores_lista': evaporadores_lista,
+        'productos_lista': productos_lista,
     }
 
     if request.method == 'POST':
@@ -53,3 +63,26 @@ def obtener_datos_evaporador(request):
         return JsonResponse(data)
     except Evaporador.DoesNotExist:
         return JsonResponse({'error': 'Evaporador no encontrado'}, status=404)
+    
+def obtener_datos_producto(request):
+    # Recupera los detalles de un producto especifico de la bd secuandaria y los devuelve en formato JSON
+    producto = request.GET.get('producto')
+    if not producto:
+        return JsonResponse({'error': 'Producto no proporcionado'}, status=400)
+    try:
+        prod = Productos.objects.using('m1_carga_termica').get(producto=producto)
+        #Mapeo de los datos del objeto producto a un diccionario para la respuesta JSON
+        data = {
+            'punto_fusion': prod.punto_fusion_f,
+            'cp_sobre': prod.cp_sobre_punto_cong_btu_lb_f,
+            'cp_debajo': prod.cp_debajo_punto_cong_btu_lb_f,
+            'latente_btu': prod.latente_btu_lb,
+            'temp_0': prod.temp_0,
+            'temp_5': prod.temp_5,
+            'temp_10': prod.temp_10,
+            'temp_15': prod.temp_15,
+            'temp_20': prod.temp_20,
+        }
+        return JsonResponse(data)
+    except Productos.DoesNotExist:
+        return JsonResponse({'error': 'Producto no encontrado'}, status=404)
