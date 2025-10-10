@@ -1,9 +1,8 @@
 from django.db import models
 
 class Evaporador(models.Model):
-    """
-    modelo para almacenar información sobre los evaporadores.
-    """
+    #modelo para almacenar información sobre los evaporadores.
+    
     #clave primaria modelo del evaporador
     modelo = models.CharField(max_length=255, primary_key=True)
 
@@ -32,3 +31,28 @@ class Evaporador(models.Model):
     class Meta:
         managed = False 
         db_table = 'evaporadores'
+
+    
+class Productos(models.Model):
+    # modelo para almacenar informacion sobre los productos.
+
+    # clave primaria id del producto
+    id = models.DecimalField(max_digits=10, decimal_places=0, primary_key=True)
+
+    products = models.CharField(max_length=255, null=True, blank=True)
+    productos = models.CharField(max_length=255, null=True, blank=True)
+    tipo_producto = models.CharField(max_length=255, null=True, blank=True)
+    punto_fusion_f = models.CharField(max_length=255, null=True, blank=True)
+    cp_sobre_punto_cong_btu_lb_f = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    cp_debajo_punto_cong_btu_lb_f = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    latente_btu_lb = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    temp_0 = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    temp_5 = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    temp_10 = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    temp_15 = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    temp_20 = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        managed = False 
+        db_table = 'productos'
+
