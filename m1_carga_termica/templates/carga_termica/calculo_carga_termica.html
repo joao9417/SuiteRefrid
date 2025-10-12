@@ -113,25 +113,41 @@
         <fieldset class="border p-3 mb-4 rounded bg-green">
             <legend class="fw-bold px-2">Producto 1</legend>
             <div class="row g-3">
-                <div class="col-md-4"><label for="producto1" class="form-label">Nombre</label><input type="text" name="producto1" class="form-control" value="Salchicha de cerdo"></div>
-                <div class="col-md-4"><label for="canastas1" class="form-label">Canastas [cm]</label><input type="text" name="canastas1" class="form-control form-control-center" value="25"></div>
+
+                <div class="col-md-4">
+                    <label for="producto1" class="form-label">Nombre</label>
+                    <select name="producto1" id="producto1" class="form-select">
+                        <option value="">Seleccione un producto</option>
+                        {% for prod in productos_lista %}
+                        <option value="{{ prod.productos }}">{{ prod.productos }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="canastas1" class="form-label">Canastas [cm]</label>
+                    <select name="canastas1" id="canastas1" class="form-select form-control-center">
+                        <option value="13cms">13cms</option>
+                        <option value="25cms">25cms</option>
+                        <option value="na">n/a</option>
+                    </select>    
+                </div>
                 <div class="col-md-4"><label for="p1_t_in" class="form-label">T in [°C]</label><input type="text" name="p1_t_in" class="form-control form-control-center" value="55"></div>
                 <div class="col-md-4"><label for="p1_t_cong" class="form-label">T cong [°C]</label><input type="text" name="p1_t_cong" class="form-control form-control-center" value="FALTA"></div>
                 <div class="col-md-4"><label for="p1_t_out" class="form-label">T out [°C]</label><input type="text" name="p1_t_out" class="form-control form-control-center" value="4"></div>
-                <div class="col-md-4"><label for="rotacion" class="form-label">Rotación</label><input type="text" name="rotacion" class="form-control form-control-center" value="1.050"></div>
-                <div class="col-md-4"><label for="carros" class="form-label">Carros</label><input type="text" name="carros" class="form-control form-control-center" value="3"></div>
-                <div class="col-md-4"><label for="f_carga" class="form-label">Factor carga</label><input type="text" name="f_carga" class="form-control form-control-center" value="1.1"></div>
-                <div class="col-md-4"><label for="almac" class="form-label">Almacenamiento [ton]</label><input type="text" name="Almacenamiento" class="form-control form-control-center" value="0.3"></div>
-                <div class="col-md-4"><label for="calor_latente" class="form-label">Calor latente</label><input type="text" name="calor_latente" class="form-control form-control-center" value="64.0"></div>
-                <div class="col-md-4"><label for="p1_c" class="form-label">C</label><input type="text" name="p1_c" class="form-control form-control-center" value="0.7"></div>
-                <div class="col-md-4"><label for="p1_cp" class="form-label">Cp p cong</label><input type="text" name="p1_cp" class="form-control form-control-center" value="0.7"></div>
+                <div class="col-md-4"><label for="p1_rotacion" class="form-label">Rotación</label><input type="text" name="p1_rotacion" id="p1_rotacion" class="form-control form-control-center"></div>
+                <div class="col-md-4"><label for="p1_carros" class="form-label">Carros</label><input type="text" name="p1_carros" id="p1_carros" class="form-control form-control-center" value="3"></div>
+                <div class="col-md-4"><label for="p1_f_carga" class="form-label">Factor carga</label><input type="text" name="p1_f_carga" class="form-control form-control-center" value="1.1"></div>
+                <div class="col-md-4"><label for="p1_almac" class="form-label">Almacenamiento [ton]</label><input type="text" name="p1_almacenamiento" class="form-control form-control-center" value="0.3"></div>
+                <div class="col-md-4"><label for="p1_calor_latente" class="form-label">Calor latente</label><input type="text" name="p1_calor_latente" class="form-control form-control-center" value="64.0"></div>
+                <div class="col-md-4"><label for="p1_cp_s_p" class="form-label">Cp&gt;p cong</label><input type="text" name="p1_cp_s_p" class="form-control form-control-center"></div>
+                <div class="col-md-4"><label for="p1_cp_b_p" class="form-label">Cp&lt;p cong</label><input type="text" name="p1_cp_b_p" class="form-control form-control-center"></div>
                 
                 <div id="calorEvolucionBox" class="col-md-4">
                     <label for="calor_evolucion" class="form-label">Calor evolución</label>
-                    <input type="text" name="calor_evolucion" class="form-control form-control-center" value="0.0">
+                    <input type="text" name="p1_calor_evolucion" class="form-control form-control-center" value="0.0">
                 </div>
             </div>
-            
             <div class="form-check mt-3">
                 <input class="form-check-input" type="checkbox" id="toggleCalorEvolucion" checked>
                 <label class="form-check-label" for="toggleCalorEvolucion">
@@ -153,22 +169,39 @@
         <fieldset class="border p-3 mb-4 rounded bg-green" id="producto2" style="display: none;">
             <legend class="fw-bold px-2">Producto 2</legend>
             <div class="row g-3">
-                <div class="col-md-4"><label for="producto2" class="form-label">Nombre</label><input type="text" name="producto2" class="form-control" value=""></div>
-                <div class="col-md-4"><label for="canastas2" class="form-label">Canastas [cm]</label><input type="text" name="canastas2" class="form-control form-control-center" value=""></div>
+
+                <div class="col-md-4">
+                    <label for="producto2" class="form-label">Nombre</label>
+                    <select name="selectProducto2" id="selectProducto2" class="form-select">
+                        <option value="">Seleccione un producto</option>
+                        {% for prod in productos_lista %}
+                        <option value="{{ prod.productos }}">{{ prod.productos }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="canastas2" class="form-label">Canastas [cm]</label>
+                    <select name="canastas2" id="canastas2" class="form-select form-control-center">
+                        <option value="13cms">13cms</option>
+                        <option value="25cms">25cms</option>
+                        <option value="na">n/a</option>
+                    </select>     
+                </div>
                 <div class="col-md-4"><label for="p2_t_in" class="form-label">T in [°C]</label><input type="text" name="p2_t_in" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="p2_t_cong" class="form-label">T cong [°C]</label><input type="text" name="p2_t_cong" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="p2_t_out" class="form-label">T out [°C]</label><input type="text" name="p2_t_out" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="rotacion2" class="form-label">Rotación</label><input type="text" name="rotacion2" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="carros" class="form-label">Carros</label><input type="text" name="carros" class="form-control form-control-center" value="3"></div>
-                <div class="col-md-4"><label for="f_carga2" class="form-label">Factor carga</label><input type="text" name="f_carga2" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="almac2" class="form-label">Almacenamiento [ton]</label><input type="text" name="almac2" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="calor_latente2" class="form-label">Calor latente</label><input type="text" name="calor_latente2" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="p2_c" class="form-label">C</label><input type="text" name="p2_c" class="form-control form-control-center" value="0.7"></div>
-                <div class="col-md-4"><label for="p2_cp" class="form-label">Cp p cong</label><input type="text" name="p2_cp" class="form-control form-control-center" value="0.7"></div>
+                <div class="col-md-4"><label for="p2_rotacion" class="form-label">Rotación</label><input type="text" name="p2_rotacion" id="p2_rotacion" class="form-control form-control-center" value=""></div>
+                <div class="col-md-4"><label for="p2_carros" class="form-label">Carros</label><input type="text" name="p2_carros" id="p2_carros" class="form-control form-control-center" value="3"></div>
+                <div class="col-md-4"><label for="p2_f_carga" class="form-label">Factor carga</label><input type="text" name="p2_f_carga" class="form-control form-control-center" value=""></div>
+                <div class="col-md-4"><label for="p2_almac" class="form-label">Almacenamiento [ton]</label><input type="text" name="p2_almac" class="form-control form-control-center" value=""></div>
+                <div class="col-md-4"><label for="p2_calor_latente" class="form-label">Calor latente</label><input type="text" name="p2_calor_latente" class="form-control form-control-center" value=""></div>
+                <div class="col-md-4"><label for="p2_cp_s_p" class="form-label">Cp&gt;p cong</label><input type="text" name="p2_cp_s_p" class="form-control form-control-center"></div>
+                <div class="col-md-4"><label for="p2_cp_b_p" class="form-label">Cp&lt;p cong</label><input type="text" name="p2_cp_b_p" class="form-control form-control-center"></div>
                 
                 <div id="calorEvolucionBox2" class="col-md-4">
-                    <label for="calor_evolucion2" class="form-label">Calor evolución</label>
-                    <input type="text" name="calor_evolucion2" class="form-control form-control-center" value="">
+                    <label for="p2_calor_evolucion" class="form-label">Calor evolución</label>
+                    <input type="text" name="p2_calor_evolucion" class="form-control form-control-center" value="">
                 </div>
             </div>
             
@@ -250,167 +283,5 @@
 
 {% block extra_js %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // --- Lógica para mostrar/ocultar secciones basadas en checkboxes ---
-
-    // Aplicación - % de congelación
-    const aplicacionSelect = document.getElementById('aplicacion');
-    const porcentajeContainer = document.getElementById('porcentajeCongelacionContainer');
-
-    function togglePorcentajeCongelacion() {
-        // verificar si el valor seleccionado es "cong Parcial"
-        if (aplicacionSelect.value === 'Cong Parcial') {
-            //si es "Cong Parcial", muestra el contenedor
-            porcentajeContainer.style.display = 'block';
-        } else {
-            // si es cualquier otra opcion, lo oculta
-            porcentajeContainer.style.display = 'none';
-        }
-    }
-
-    togglePorcentajeCongelacion();
-    aplicacionSelect.addEventListener('change', togglePorcentajeCongelacion);
-    
-    
-    // Producto 2
-    const toggleProducto2 = document.getElementById('toggleProducto2');
-    const producto2 = document.getElementById('producto2');
-    producto2.style.display = toggleProducto2.checked ? 'block' : 'none';
-    toggleProducto2.addEventListener('change', function() {
-        producto2.style.display = this.checked ? 'block' : 'none';
-    });
-
-    // Producto 1 - Calor Evolución
-    const toggleCE = document.getElementById('toggleCalorEvolucion');
-    const calorEvolucionBox = document.getElementById('calorEvolucionBox');
-    calorEvolucionBox.style.display = toggleCE.checked ? 'block' : 'none';
-    toggleCE.addEventListener('change', function() {
-        calorEvolucionBox.style.display = this.checked ? 'block' : 'none';
-    });
-
-    // Producto 2 - Calor Evolución
-    const toggleCE2 = document.getElementById('toggleCalorEvolucion2');
-    const calorEvolucionBox2 = document.getElementById('calorEvolucionBox2');
-    calorEvolucionBox2.style.display = toggleCE2.checked ? 'block' : 'none';
-    toggleCE2.addEventListener('change', function() {
-        calorEvolucionBox2.style.display = this.checked ? 'block' : 'none';
-    });
-
-    // --- Lógica del Menú Desplegable (Dropdown) ---
-    
-    const selectEvap = document.getElementById('evap');
-
-    // Escucha el evento 'change' del menú desplegable.
-    selectEvap.addEventListener('change', async function() {
-        const modeloSeleccionado = this.value;
-        if (modeloSeleccionado) {
-            obtenerDatosEvaporador(modeloSeleccionado);
-        } else {
-            // Limpia los campos si se selecciona la opción de "Seleccione un modelo"
-            limpiarCamposEvaporador();
-        }
-    });
-    
-    // Función para limpiar todos los campos del evaporador
-    function limpiarCamposEvaporador() {
-        document.querySelector('input[name="n_mot"]').value = '';
-        document.querySelector('input[name="m3_h_c_u"]').value = '';
-        document.querySelector('input[name="hp"]').value = '';
-        document.querySelector('input[name="watts"]').value = '';
-        document.querySelector('input[name="largo_mm"]').value = '';
-        updateCalculations();
-    }
-
-    function updateCalculations() {
-        // 1. OBTENER VALORES DE DIMENSIÓN
-        const largo = parseFloat(document.querySelector('input[name="l_m"]').value) || 0;
-        const ancho = parseFloat(document.querySelector('input[name="a_m"]').value) || 0;
-        const alto = parseFloat(document.querySelector('input[name="h_m"]').value) || 0;
-
-        // 2. OBTENER Y NORMALIZAR EL CAUDAL UNITARIO
-        
-        // OBTENER VALOR COMO STRING PRIMERO para poder usar .replace()
-        const caudal_unitario_raw = document.querySelector('input[name="m3_h_c_u"]').value;
-        
-        // NORMALIZACIÓN:
-        // a) Eliminar el separador de miles (asumimos que es el punto '.')
-        let caudal_unitario_clean = caudal_unitario_raw.replace(/\./g, '');
-        
-        // b) Si el separador decimal es la coma ',', reemplazarlo por el punto '.' (formato JS/Numérico)
-        // ESTE PASO SÓLO ES NECESARIO SI TIENES DECIMALES, ej: 13.940,50 -> 13940.50
-        // Si tus caudales son números enteros (como 13.940), omite esta línea.
-        // caudal_unitario_clean = caudal_unitario_clean.replace(/,/g, '.');
-
-        // Convertir el valor limpio a número
-        const caudal_unitario = parseFloat(caudal_unitario_clean) || 0; 
-        
-        // 3. OBTENER CANTIDAD
-        const cantidad_evap = parseFloat(document.querySelector('input[name="cant_evap"]').value) || 0; 
-
-        // output
-        const inputCambioHora = document.querySelector('input[name="c_h"]');
-
-        // 4. CÁLCULO
-        const volumen_cuarto = largo * ancho * alto; 
-        const caudal_total = caudal_unitario * cantidad_evap; 
-
-        let cambio_por_hora = 0;
-
-        if (volumen_cuarto > 0) {
-            cambio_por_hora = caudal_total / volumen_cuarto; 
-        }
-        
-        // 5. MOSTRAR RESULTADO
-        inputCambioHora.value = cambio_por_hora.toFixed(2);
-    }
-
-
-    // Esta función hará la llamada AJAX para obtener los detalles del Evaporador
-    async function obtenerDatosEvaporador(modelo) { 
-        try {
-            const response = await fetch(`/carga-termica/api/evaporador-data/?modelo=${modelo}`);
-            const data = await response.json();
-            
-            // Llenar los campos con los datos obtenidos
-            document.querySelector('input[name="n_mot"]').value = data.n_mot || ''; 
-            document.querySelector('input[name="m3_h_c_u"]').value = data.m3_h_c_u || '';
-            document.querySelector('input[name="hp"]').value = data.hp || ''; 
-            document.querySelector('input[name="largo_mm"]').value = data.largo_mm || '';
-
-            updateCalculations(); 
-        } catch (error) {
-            console.error("Error al obtener datos del evaporador:", error);
-            limpiarCamposEvaporador();
-        }
-    }
-
-    // Escucha los cambios en los campos de dimensiones y cantidad de evaporadores
-    const inputLargo = document.querySelector('input[name="l_m"]');
-    const inputAncho = document.querySelector('input[name="a_m"]');
-    const inputAlto = document.querySelector('input[name="h_m"]');
-    const inputCantidadEvap = document.querySelector('input[name="cant_evap"]');
-
-    //asignar eventos de escucha para los calculos en tiempo real 
-    if (inputLargo) {
-        inputLargo.addEventListener('input', updateCalculations);
-    }
-
-    if (inputAncho) {
-        inputAncho.addEventListener('input', updateCalculations);
-    }
-
-    if (inputAlto) {
-        inputAlto.addEventListener('input', updateCalculations);
-    }
-
-    if (inputCantidadEvap) {
-        inputCantidadEvap.addEventListener('input', updateCalculations);
-    }
-
-    // inicializar los cálculos al cargar la página
-    updateCalculations();
-
-});
-</script>
+<script src="{% static 'js/carga_termica/carga_termica.js' %}"></script>
 {% endblock %}
