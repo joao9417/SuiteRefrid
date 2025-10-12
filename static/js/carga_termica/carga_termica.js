@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // --Producto 2 logica de mostrar/ocultar--
     const toggleProducto2 = document.getElementById('toggleProducto2');
-    const producto2 = document.getElementById('producto2');
+    const producto2 = document.getElementById('fieldProducto2');
     producto2.style.display = toggleProducto2.checked ? 'block' : 'none';
     toggleProducto2.addEventListener('change', function() {
         producto2.style.display = this.checked ? 'block' : 'none';
@@ -209,8 +209,29 @@ if (p2_carrosInput) {
 
         });
 
+//--logica para actualizar calor de evolucion al cambiar temperatura del cuarto--
+const inputTempCuarto = document.getElementById('t_cam');
+
+if (inputTempCuarto) {
+    inputTempCuarto.addEventListener('input', function() {
+        //producto 1
+        const prod1 = selectProducto1.value;
+        if (prod1) {
+            //forzar la recarga de datos
+            obtenerDatosProducto(prod1, 1);
+        }
+
+        //producto 2
+        const prod2 = selectProducto2.value;
+        if (prod2) {
+            //forzar la recarga de datos
+            obtenerDatosProducto(prod2, 2);
+        }
+    });
+}
+
     
-// Función genérica para limpiar campos de producto
+// --Función genérica para limpiar campos de producto--
 function limpiarCamposProducto(num) {
     document.querySelector(`input[name="p${num}_t_cong"]`).value = '';
     document.querySelector(`input[name="p${num}_cp_s_p"]`).value = '';
@@ -225,9 +246,6 @@ async function obtenerDatosProducto(producto, num) {
         //1. peticion a la API
         const response = await fetch(`/carga-termica/api/productos-data/?productos=${producto}`);
         const data = await response.json();
-
-        let tCongCelsius = '';
-
 
         //2. obtener el valor de farenheit (convertimos a string para usar toUpperCase)
         const valorFarenheitAPI = String(data.t_cong || "").trim().toUpperCase();
@@ -262,9 +280,11 @@ async function obtenerDatosProducto(producto, num) {
             inputTcong.value = valorFinalCampo;
         }
 
-        document.querySelector(`input[name="p${num}_cp_s_p"]`).value = data.cp_s_p || '';
-        document.querySelector(`input[name="p${num}_cp_b_p"]`).value = data.cp_b_p || '';
-        document.querySelector(`input[name="p${num}_calor_latente"]`).value = data.calor_latente || '';
+        document.querySelector(`input[name="p${num}_cp_s_p"]`).value = data.cp_sobre || '';
+        document.querySelector(`input[name="p${num}_cp_b_p"]`).value = data.cp_debajo || '';
+        document.querySelector(`input[name="p${num}_calor_latente"]`).value = data.latente_btu || '';
+
+        actualizarCalorEvolucion(data, num);
 
 
 
@@ -273,5 +293,29 @@ async function obtenerDatosProducto(producto, num) {
         limpiarCamposProducto(num);
     }
 }    
+
+// funcion para actualizar calor de evolucion al cambiar temperatura del cuarto
+function actualizarCalorEvolucion(data, num) {
+
+    const tempCuartoInput = document.getElementById('t_cam');
+
+    const tempCuartoValue = parseFloat(tempCuartoInput?.value) || 0;
+
+    let valorEvolucion = '';
+
+        if (tempCuartoValue<0) {
+            valorEvolucion = data.temp_0 || '';
+        } else if (tempCuartoValue>0 && tempCuartoValue<=5) {
+            valorEvolucion = data.temp_5 || '';
+        } else if (tempCuartoValue>5 && tempCuartoValue<=10) {
+            valorEvolucion = data.temp_10 || '';
+        } else if (tempCuartoValue>10 && tempCuartoValue<=15) {
+            valorEvolucion = data.temp_15 || '';
+        } else if (tempCuartoValue>15 && tempCuartoValue<=20) {
+            valorEvolucion = data.temp_20 || '';
+        } 
+
+        document.querySelector(`input[name="p${num}_calor_evolucion"]`).value = valorEvolucion;
+}
 
 });

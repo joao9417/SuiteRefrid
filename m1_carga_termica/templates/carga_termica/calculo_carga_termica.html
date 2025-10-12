@@ -166,13 +166,13 @@
             </div>
         </fieldset>
 
-        <fieldset class="border p-3 mb-4 rounded bg-green" id="producto2" style="display: none;">
+        <fieldset class="border p-3 mb-4 rounded bg-green" id="fieldProducto2" style="display: none;">
             <legend class="fw-bold px-2">Producto 2</legend>
             <div class="row g-3">
 
                 <div class="col-md-4">
                     <label for="producto2" class="form-label">Nombre</label>
-                    <select name="selectProducto2" id="selectProducto2" class="form-select">
+                    <select name="producto2" id="producto2" class="form-select">
                         <option value="">Seleccione un producto</option>
                         {% for prod in productos_lista %}
                         <option value="{{ prod.productos }}">{{ prod.productos }}</option>
@@ -227,7 +227,7 @@
                 <div class="col-md-4"><label for="luxes" class="form-label">Luxes</label><input type="text" name="luxes" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="luminaria" class="form-label">Luminaria</label><input type="text" name="luminaria" class="form-control" value=""></div>
                 <div class="col-md-4"><label for="cantidad_luminarias" class="form-label">Cantidad</label><input type="text" name="cantidad_luminarias" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="w" class="form-label">Potencia [W]</label><input type="text" name="w" class="form-control form-control-center" value="40"></div>
+                <div class="col-md-4"><label for="w" class="form-label">Potencia [W]</label><input type="text" name="w" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="t_h_ilum" class="form-label">Tiempo [h]</label><input type="text" name="t_h_ilum" class="form-control form-control-center" value=""></div>
             </div>
         </fieldset> 
