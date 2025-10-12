@@ -12,7 +12,7 @@ def calculo_carga_termica(request, nombre_cuarto=None):
     if nombre_cuarto is None:
         nombre_cuarto = "Cuarto_Principal"
 
-    #1. OBTENER EVAPORADORES, para el dropdown
+    #1. OBTENER EVAPORADORES, para el down
     try:
         evaporadores_lista = Evaporador.objects.using('m1_carga_termica').values('modelo').order_by('modelo')
     except Exception as e:
@@ -74,7 +74,7 @@ def obtener_datos_producto(request):
         prod = Productos.objects.using('m1_carga_termica').get(productos=productos)
         #Mapeo de los datos del objeto producto a un diccionario para la respuesta JSON
         data = {
-            'punto_fusion': prod.punto_fusion_f,
+            't_cong': prod.punto_fusion_f,
             'cp_sobre': prod.cp_sobre_punto_cong_btu_lb_f,
             'cp_debajo': prod.cp_debajo_punto_cong_btu_lb_f,
             'latente_btu': prod.latente_btu_lb,
