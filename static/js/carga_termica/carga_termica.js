@@ -260,7 +260,13 @@ async function obtenerDatosProducto(producto, num) {
 
         if (inputTcong) {
             inputTcong.value = valorFinalCampo;
-        }      
+        }
+
+        document.querySelector(`input[name="p${num}_cp_s_p"]`).value = data.cp_s_p || '';
+        document.querySelector(`input[name="p${num}_cp_b_p"]`).value = data.cp_b_p || '';
+        document.querySelector(`input[name="p${num}_calor_latente"]`).value = data.calor_latente || '';
+
+
 
     } catch (error) {
         console.error(`Error al obtener datos del producto ${num}:`, error);
