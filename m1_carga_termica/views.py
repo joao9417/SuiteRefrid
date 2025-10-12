@@ -22,7 +22,8 @@ def calculo_carga_termica(request, nombre_cuarto=None):
 
     #2. OBTENER PRODUCTOS, para el dropdown
     try:
-        productos_lista = Productos.objects.using('m1_carga_termica').values('producto').order_by('producto')
+        productos_lista = Productos.objects.using('m1_carga_termica').values('productos').order_by('productos')
+        
     except Exception as e:
         #manejar la excepcion si hay problemas de conexion con la BD
         print(F"error al obtener productos: {e}")
@@ -64,13 +65,13 @@ def obtener_datos_evaporador(request):
     except Evaporador.DoesNotExist:
         return JsonResponse({'error': 'Evaporador no encontrado'}, status=404)
     
+ # Recupera los detalles de un producto especifico de la bd secuandaria y los devuelve en formato JSON    
 def obtener_datos_producto(request):
-    # Recupera los detalles de un producto especifico de la bd secuandaria y los devuelve en formato JSON
-    producto = request.GET.get('producto')
-    if not producto:
+    productos = request.GET.get('productos')
+    if not productos:
         return JsonResponse({'error': 'Producto no proporcionado'}, status=400)
     try:
-        prod = Productos.objects.using('m1_carga_termica').get(producto=producto)
+        prod = Productos.objects.using('m1_carga_termica').get(productos=productos)
         #Mapeo de los datos del objeto producto a un diccionario para la respuesta JSON
         data = {
             'punto_fusion': prod.punto_fusion_f,
