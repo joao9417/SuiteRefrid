@@ -303,17 +303,47 @@ function actualizarCalorEvolucion(data, num) {
 
     let valorEvolucion = '';
 
-        if (tempCuartoValue<0) {
-            valorEvolucion = data.temp_0 || '';
-        } else if (tempCuartoValue>0 && tempCuartoValue<=5) {
-            valorEvolucion = data.temp_5 || '';
-        } else if (tempCuartoValue>5 && tempCuartoValue<=10) {
-            valorEvolucion = data.temp_10 || '';
-        } else if (tempCuartoValue>10 && tempCuartoValue<=15) {
-            valorEvolucion = data.temp_15 || '';
-        } else if (tempCuartoValue>15 && tempCuartoValue<=20) {
-            valorEvolucion = data.temp_20 || '';
-        } 
+        switch (true) {
+            case (tempCuartoValue < 0):
+                valorEvolucion = data.temp_0 || '';
+                break;
+            
+            case (tempCuartoValue === 0):
+                valorEvolucion = data.temp_5 || '';
+                break;
+            
+            case (tempCuartoValue > 0 && tempCuartoValue < 5):
+                valorEvolucion = data.temp_5 || '';
+                break;
+            
+            case (tempCuartoValue === 5):
+                valorEvolucion = data.temp_10 || '';
+                break;
+            
+            case (tempCuartoValue > 5 && tempCuartoValue < 10):
+                valorEvolucion = data.temp_10 || '';
+                break;
+            
+            case (tempCuartoValue === 10):
+                valorEvolucion = data.temp_15 || '';
+                break;
+            
+            case (tempCuartoValue > 10 && tempCuartoValue < 15):
+                valorEvolucion = data.temp_15 || '';
+                break;
+            
+            case (tempCuartoValue === 15):
+                valorEvolucion = data.temp_20 || '';
+                break;
+            
+            case (tempCuartoValue > 15 && tempCuartoValue < 20):
+                valorEvolucion = data.temp_20 || '';
+                break;
+
+            default:
+                valorEvolucion = '';
+                break;
+        }
 
         document.querySelector(`input[name="p${num}_calor_evolucion"]`).value = valorEvolucion;
 }
