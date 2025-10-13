@@ -1,0 +1,127 @@
+/* --- 1. LOGIN PAGE BACKGROUND STYLES (Applies to base_auth.html body) --- */
+
+.login-base-bg {
+    /* Set dark, full-screen background image (bokeh image) */
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517486803875-c54d3393b3f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff; /* Ensure all text is white */
+    min-height: 100vh;
+    display: flex; /* Centers content */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+}
+
+/* --- 2. LOGIN FORM CONTAINER & WRAPPER STYLES --- */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 450px;
+    width: 100%;
+}
+
+/* The big title above the form */
+.main-title h1 {
+    font-size: 2.2em;
+    font-weight: 600;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Login Form Wrapper (The translucent box) */
+.login-wrapper {
+    background-color: rgba(0, 0, 0, 0.45); /* Dark, translucent background */
+    padding: 35px 45px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px); /* Soft blur effect */
+    width: 100%;
+}
+
+.login-wrapper h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+/* --- 3. INPUT AND FIELD STYLES (Overriding Bootstrap defaults) --- */
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+/* Target the input fields created by Django forms (adjusting their appearance) */
+.mb-3 input[type="text"],
+.mb-3 input[type="password"] {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+
+.mb-3 input[type="text"]:focus,
+.mb-3 input[type="password"]:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #007bff; 
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.mb-3 input::placeholder {
+    color: #aaa;
+}
+
+/* --- 4. BUTTON AND LINK STYLES --- */
+
+/* Login Button - targeting the Bootstrap class for custom styling */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 0.9em;
+}
+
+.forgot-password a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
