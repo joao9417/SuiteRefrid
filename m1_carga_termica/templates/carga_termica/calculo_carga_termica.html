@@ -225,7 +225,17 @@
             <legend class="fw-bold px-2">Iluminación</legend>
             <div class="row g-3">
                 <div class="col-md-4"><label for="luxes" class="form-label">Luxes</label><input type="text" name="luxes" class="form-control form-control-center" value=""></div>
-                <div class="col-md-4"><label for="luminaria" class="form-label">Luminaria</label><input type="text" name="luminaria" class="form-control" value=""></div>
+                
+                <div class="col-md-4">
+                    <label for="luminaria" class="form-label">Luminaria</label>
+                    <select name="luminaria" id="luminaria" class="form-select">
+                        <option value="">Seleccione una luminaria</option>
+                        {% for luminaria in lamparas_led_lista %}
+                        <option value="{{ luminaria.ref }}">{{ luminaria.ref }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="col-md-4"><label for="cantidad_luminarias" class="form-label">Cantidad</label><input type="text" name="cantidad_luminarias" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="w" class="form-label">Potencia [W]</label><input type="text" name="w" class="form-control form-control-center" value=""></div>
                 <div class="col-md-4"><label for="t_h_ilum" class="form-label">Tiempo [h]</label><input type="text" name="t_h_ilum" class="form-control form-control-center" value=""></div>

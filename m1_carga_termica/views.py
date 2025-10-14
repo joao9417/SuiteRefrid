@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from .models import Evaporador
 from .models import Productos
+from .models import Lamparas_led
 
 #vista para renderizar la plantilla y manejar el formulario
 def calculo_carga_termica(request, nombre_cuarto=None):
@@ -28,11 +29,20 @@ def calculo_carga_termica(request, nombre_cuarto=None):
         #manejar la excepcion si hay problemas de conexion con la BD
         print(F"error al obtener productos: {e}")
         productos_lista = []
+
+    #3. OBTENER LAMPARAS LED, para el dropdown
+    try:
+        lamparas_led_lista = Lamparas_led.objects.using('m1_carga_termica').values('ref').order_by('ref')
+    except Exception as e:
+        #manejar la excepcion si hay problemas de conexion con la BD
+        print(F"error al obtener lamparas led: {e}")
+        lamparas_led_lista = []
     
     context = {
         'nombreCuarto': nombre_cuarto,
         'evaporadores_lista': evaporadores_lista,
         'productos_lista': productos_lista,
+        'lamparas_led_lista': lamparas_led_lista,
     }
 
     if request.method == 'POST':
@@ -87,3 +97,20 @@ def obtener_datos_producto(request):
         return JsonResponse(data)
     except Productos.DoesNotExist:
         return JsonResponse({'error': 'Producto no encontrado'}, status=404)
+    
+#vista para obtener los datos de una lampara led por su referencia
+def obtener_datos_lampara_led(request):
+    ref = request.GET.get('ref')
+    if not ref:
+        return JsonResponse({'error': 'Referencia no proporcionada'}, status=400)
+    try:
+        lampara = Lamparas_led.objects.using('m1_carga_termica').get(ref=ref)
+        #Mapeo de los datos del objeto lampara a un diccionario para la respuesta JSON
+        data = {
+            'w': lampara.w,
+            'lumens': lampara.lumens,
+            'factor': lampara.factor,
+        }
+        return JsonResponse(data)
+    except Lamparas_led.DoesNotExist:
+        return JsonResponse({'error': 'Lampara no encontrada'}, status=404)

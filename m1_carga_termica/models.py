@@ -1,12 +1,9 @@
 from django.db import models
 
-class Evaporador(models.Model):
-    #modelo para almacenar información sobre los evaporadores.
+class Evaporador(models.Model):    
     
-    #clave primaria modelo del evaporador
     modelo = models.CharField(max_length=255, primary_key=True)
-
-    #columnas numericas
+    
     capacidad_nominal_bth = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     n_ventiladores = models.IntegerField(null=True, blank=True)
     volumen_aire_m3_h = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
@@ -21,7 +18,6 @@ class Evaporador(models.Model):
     resistencias_220v_60hz_w = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     resistencias_220v_60hz_a = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
-    #columnas de texto
     conexion_liquido_in = models.CharField(max_length=50, null=True, blank=True)
     conexion_succion_in = models.CharField(max_length=50, null=True, blank=True)
     conexion_dren_npt_in = models.CharField(max_length=50, null=True, blank=True)
@@ -34,9 +30,7 @@ class Evaporador(models.Model):
 
     
 class Productos(models.Model):
-    # modelo para almacenar informacion sobre los productos.
-
-    # clave primaria id del producto
+    
     id = models.DecimalField(max_digits=10, decimal_places=0, primary_key=True)
 
     products = models.CharField(max_length=255, null=True, blank=True)
@@ -56,3 +50,15 @@ class Productos(models.Model):
         managed = False 
         db_table = 'productos'
 
+
+class Lamparas_led(models.Model):
+
+    ref = models.CharField(max_length=255, primary_key=True)
+    descripcion = models.CharField(max_length=255, null=True, blank=True)
+    w = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    lumens = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    factor = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        managed = False 
+        db_table = 'lamparas_led'

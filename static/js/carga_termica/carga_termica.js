@@ -348,4 +348,120 @@ function actualizarCalorEvolucion(data, num) {
         document.querySelector(`input[name="p${num}_calor_evolucion"]`).value = valorEvolucion;
 }
 
+    // -- logica del menu desplegable luminaria (Dropdown) --
+    const selectLamparas = document.getElementById('luminaria');
+
+    selectLamparas.addEventListener('change', async function() {
+        const valorSeleccionado = this.value;
+        if (valorSeleccionado) {
+            obtenerDatosLampara(valorSeleccionado);
+        } else {
+            limpiarCamposLampara();
+        }
+    });
+
+    // funcion para limpiar campos de lampara
+    function limpiarCamposLampara() {
+        document.querySelector('input[name="cantidad_luminarias"]').value = '';
+        document.querySelector('input[name="potencia_lampara"]').value = '';
+        document.querySelector('input[name="total_lamparas_watts"]').value = '';
+    }
+
+// factores de iluminacion tupla
+    const factoresIluminacion = [
+        [10.0, 0.72],
+        [8.0, 0.71],
+        [6.0, 0.68],
+        [5.0, 0.63],
+        [4.0, 0.61],
+        [3.0, 0.54],
+        [2.5, 0.52],
+        [2.0, 0.45],
+        [1.5, 0.39],
+        [1.2, 0.31],
+        [1.0, 0.28],
+    ];
+
+    // funcion para buscar el factor de iluminacion
+    function buscarFactorUtil(indice_k){
+        for (const [k_val, n_fu] of factoresIluminacion) {
+            if (k_val >= indice_k) {
+                return n_fu;
+            }
+        }
+        return factoresIluminacion[factoresIluminacion.length - 1][1];
+    }
+
+
+
+    // funcion para calcular la cantidad total de lamparas
+    function calcularTotalLamparas() {
+        // 1. obtener datos y constantes
+        const luxesRequeridos = parseFloat(document.getElementById('luxes').value) || 0;
+        const largoCuarto = parseFloat(document.getElementById('l_m').value) || 0;
+        const anchoCuarto = parseFloat(document.getElementById('a_m').value) || 0;
+        const altoCuarto = parseFloat(document.getElementById('h_m').value) || 0;
+        const espesorParedMM = parseFloat(document.getElementById('pared').value) || 0;
+        
+
+        const factorLuminaria = parseFloat(document.querySelector('input[name="factor"]').value) || 0;
+        const lumenesLuminaria = parseFloat(document.querySelector('input[name="lumens"]').value) || 0;
+
+        const conversion = 1000;
+        const plano_trabajo = 0.75
+
+        // 2. parte 1 de la formula: area util y numerador
+        const largoUtil = largoCuarto - (espesorParedMM / conversion);
+        const anchoUtil = anchoCuarto - (espesorParedMM / conversion);
+
+        const areaUtil = largoUtil * anchoUtil; // m2
+
+        const numerador = luxesRequeridos * areaUtil * factorLuminaria;
+
+        // 3. parte 2 de la formula: calculo del indice k
+        const alturaUtil = altoCuarto - plano_trabajo; // m
+        const perimetroSimplificado = largoUtil * anchoUtil; // m
+
+        const denominador_k = alturaUtil * perimetroSimplificado;
+
+        let indice_k = 0;
+        if (denominador_k > 0) {
+            indice_k = areaUtil / denominador_k;
+        }
+
+        // 4. parte 3 de la formula: busqueda del factor de utilizacion FU
+        const factorUtilizacion = buscarFactorUtil(indice_k);
+
+        // 5. parte 4 de la formula: calculo final de cantidad de lamparas
+        let nLuminarias = 0;
+
+        if (factorUtilizacion > 0 && lumenesLuminaria > 0) {
+            nLuminarias = (numerador * lumenesLuminaria) / (factorUtilizacion);
+        }
+
+        const totalLamparas = Math.round(nLuminarias);
+
+        // 6. mostrar el resultado en el input correspondiente
+        document.querySelector('input[name="cantidad_luminarias"]').value = totalLamparas.toString();
+    }    
+
+
+
+    // funcion para obtener datos de la lampara mediante la API AJAX
+    async function obtenerDatosLampara(ref) {
+        try {
+            const response = await fetch(`/carga-termica/api/lamparas-data/?ref=${ref}`);
+            const data = await response.json();
+
+            // llenar los campos con los datos obtenidos
+            document.querySelector('input[name="potencia_lampara"]').value = data.potencia || '';
+            document.querySelector('input[name="cantidad_luminarias"]').value = '1';
+            document.querySelector('input[name="total_lamparas_watts"]').value = data.potencia || '';
+        } catch (error) {
+            console.error("Error al obtener datos de la lámpara:", error);
+            limpiarCamposLampara();
+        }
+    } 
+
 });
+
