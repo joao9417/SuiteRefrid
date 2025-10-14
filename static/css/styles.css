@@ -1,8 +1,7 @@
 /* --- 1. LOGIN PAGE BACKGROUND STYLES (Applies to base_auth.html body) --- */
-
 .login-base-bg {
-    /* Set dark, full-screen background image (bokeh image) */
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517486803875-c54d3393b3f2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+    /* REMOVE the image URL. This only applies the DARK OVERLAY over the video. */
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)); 
     background-size: cover;
     color: #fff; /* Ensure all text is white */
     min-height: 100vh;
@@ -12,6 +11,7 @@
     padding: 20px;
     font-family: 'Open Sans', sans-serif;
     margin: 0;
+    z-index: -1; /* Place the overlay just above the video (z-index: -2) */
 }
 
 /* --- 2. LOGIN FORM CONTAINER & WRAPPER STYLES --- */
@@ -124,4 +124,18 @@
 .forgot-password a:hover {
     color: #007bff;
     text-decoration: underline;
+}
+
+/* --- FULL-SCREEN VIDEO BACKGROUND STYLES --- */
+#video-background {
+    position: fixed; /* Ensures it covers the entire viewport */
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2; /* Puts the video at the very back */
+    transform: translateX(-50%) translateY(-50%); /* Centers the video */
+    object-fit: cover; /* Important: Ensures the video covers the entire screen without stretching */
 }
